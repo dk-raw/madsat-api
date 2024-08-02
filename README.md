@@ -1,9 +1,9 @@
 # MAD SAT API
-Simple API to access data from the [madsat app](https://github.com/dk-raw/madsat)
+Simple Flask API to access data from the [madsat app](https://github.com/dk-raw/madsat)
 
 ## Endpoints
 - `/events` get events db is CSV format
-- `/logs` get process logs
+- `/logs` get logs
 - `/status` get systemctl service status
 
 ### Events CSV format
@@ -17,7 +17,13 @@ The CSV contains these columns for each event:
 The logs follow this format:
 | Log Level | System Time | Message |
 |-----------|-------------|---------|
+
 `Log Level` can be `INFO`, `ERROR` or `CRITICAL`. Info logs can be ignored, error logs mean that the app encountered a minor error that does not impact its operation and critical logs indicate major errors that caused the app to fail.
 
+Currently `System Time` is on my local timezone, Athens UTC+02:00 or UTC+03:00 according to Eastern European Time.
+
 ### Status
-This endpoint checks the systemctl service to see if the python app runs on my Rasberry Pi 5. `ACTIVE` means that the app is operational and `INACTIVE` means that it is not running.
+This endpoint checks the systemctl service status and returns `ACTIVE` or `INACTIVE`.
+
+> [!IMPORTANT]  
+> The API is hosted locally on the same Rasberry Pi 5 as the MAD SAT app so if the API isn't accessible, chances are neither is the app.
