@@ -1,7 +1,12 @@
-from flask import Flask, send_file, render_template
+from flask import Flask, send_file, render_template, jsonify, make_response
 import subprocess
 import os
 from dotenv import load_dotenv
+import pymongo
+
+client = pymongo.MongoClient("localhost",27017)
+db = client["madsat"]
+eventsCollection = db["events"]
 
 load_dotenv()
 
@@ -15,7 +20,10 @@ def index():
 
 @app.route("/events")
 def events():
-    return send_file(f"{PATH}/events.txt", mimetype="text/plain")
+    events = eventsCollection.find()
+    r = make_response(jsonify(events))
+    r.mimetype = 'application/json'
+    return r
 
 @app.route("/logs")
 def logs():

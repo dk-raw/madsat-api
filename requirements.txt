@@ -64,3 +64,4 @@ urllib3==2.2.2
 wcwidth==0.2.12
 Werkzeug==3.0.3
 waitress
+pymongo=4.8.0
