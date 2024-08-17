@@ -3,6 +3,7 @@ import subprocess
 import os
 from dotenv import load_dotenv
 import pymongo
+from bson.json_util import dumps
 
 client = pymongo.MongoClient("localhost",27017)
 db = client["madsat"]
@@ -20,10 +21,8 @@ def index():
 
 @app.route("/events")
 def events():
-    events = eventsCollection.find()
-    r = make_response(jsonify(events))
-    r.mimetype = 'application/json'
-    return r
+    events_cursor = eventsCollection.find()
+    return dumps(events_cursor)
 
 @app.route("/logs")
 def logs():
