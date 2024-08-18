@@ -1,9 +1,10 @@
-from flask import Flask, send_file, render_template, jsonify, make_response
+from flask import Flask, send_file, render_template
 import subprocess
 import os
 from dotenv import load_dotenv
 import pymongo
 from bson.json_util import dumps
+import json
 
 client = pymongo.MongoClient("localhost",27017)
 db = client["madsat"]
@@ -21,8 +22,9 @@ def index():
 
 @app.route("/events")
 def events():
-    events_cursor = eventsCollection.find()
-    return dumps(events_cursor)
+    events = eventsCollection.find()
+    json_string = dumps(events)
+    return json.loads(json_string)
 
 @app.route("/logs")
 def logs():
