@@ -7,6 +7,12 @@ Simple Flask API to access data from the [madsat app](https://github.com/dk-raw/
 - `/status` get systemctl service status
 
 ### Events
+You can request all the events in the database in either JSON or CSV format. By default the API returns the JSON data. If you want the CSV converted data, add `format=csv` (case sensistive) on the request url as a query parameter.
+
+An event is a satellite passage above a selected magnetometer station.
+
+An event is considered resolved when the data from the magneotmeter station have been published, downloaded by the app then processed for anomalies and uploaded to Twitter as a graph.
+
 #### Events JSON format
 The JSON follows this structure
 ```JSON
@@ -30,8 +36,6 @@ The JSON follows this structure
 The CSV contains these columns for each event:
 | Event ID | Unix Timestamp | Observatory IAGA Code | Observatory Name | Observatory Lat | Observatory Lon | Satellite NORAD ID | Satellite Name | Tweet ID | Resolution status |
 |----------|----------------|-----------------------|------------------|-----------------|-----------------|--------------------|----------------|----------|----------|
-
-`Resolved` is either `True` or `False` depending on if the event has been resolved, meaning that the correct observatory data have been published, fetched, processed and uploaded to twitter as a reply to the original tweet.
 
 ### Logs format
 The logs follow this format:

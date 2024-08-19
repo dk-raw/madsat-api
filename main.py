@@ -24,7 +24,7 @@ def index():
 @app.route("/events")
 def events():
     format = request.args.get("format")
-    if format.lower() == "csv":
+    if format == "csv":
         events = eventsCollection.find()
         json_string = dumps(events)
         df = pandas.read_json(json_string)
