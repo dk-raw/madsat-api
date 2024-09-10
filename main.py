@@ -19,7 +19,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    status = subprocess.call(["systemctl", "is-active", "--quiet", "madsat.service"])
+    status_string = "ACTIVE" if status==0 else "INACTIVE"
+    return render_template("index.html", status_string=status_string)
 
 @app.route("/events")
 def events():
@@ -28,7 +30,7 @@ def events():
         events = eventsCollection.find()
         json_string = dumps(events)
         df = pandas.read_json(json_string)
-        return df.to_csv()
+        return df.to_csv(index=False)
     else:
         events = eventsCollection.find()
         json_string = dumps(events)
